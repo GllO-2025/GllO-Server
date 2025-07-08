@@ -1,6 +1,6 @@
 # GllO-Server
 
-### 인프라
+###인프라
 ![image](https://github.com/user-attachments/assets/a9c84fa3-6feb-4893-94a6-1aa66e6f487d)
 
 ### CI/CD
