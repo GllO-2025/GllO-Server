@@ -99,16 +99,16 @@ public class GlobalExceptionHandler {
                 .body(errorMessage);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorMessage> handle(Exception e, HttpServletRequest request, HttpServletResponse response) {
-        ErrorMessage errorMessage = new ErrorMessage("서버 관리자에게 문의하세요");
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        String stackTrace = sw.toString();
-        request.setAttribute("stackTrace", stackTrace);
-        return ResponseEntity
-                .internalServerError()
-                .body(errorMessage);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorMessage> handle(Exception e, HttpServletRequest request, HttpServletResponse response) {
+//        ErrorMessage errorMessage = new ErrorMessage("서버 관리자에게 문의하세요");
+//        StringWriter sw = new StringWriter();
+//        PrintWriter pw = new PrintWriter(sw);
+//        e.printStackTrace(pw);
+//        String stackTrace = sw.toString();
+//        request.setAttribute("stackTrace", stackTrace);
+//        return ResponseEntity
+//                .internalServerError()
+//                .body(errorMessage);
+//    }
 }
