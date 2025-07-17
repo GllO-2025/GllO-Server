@@ -1,6 +1,7 @@
 package backend.glloserver.auth.exception;
 
 import backend.glloserver.auth.service.dto.GoogleLoginFailResponseDto;
+import backend.glloserver.auth.service.dto.LoginFailResponseDto;
 import backend.glloserver.global.exception.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,9 @@ public class GoogleLoginExceptionHandler implements ResponseErrorHandler {
     }
 
     private AuthErrorCode getGoogleLoginErrorCode(final ClientHttpResponse response) throws IOException {
-        GoogleLoginFailResponseDto googleLoginFailResponse = objectMapper.readValue(
-                response.getBody(), GoogleLoginFailResponseDto.class);
+        LoginFailResponseDto googleLoginFailResponse = objectMapper.readValue(
+                response.getBody(), LoginFailResponseDto.class);
         log.error(googleLoginFailResponse.toString());
-        return AuthErrorCode.KAKAO_LOGIN_INTERNAL_SERVER_ERROR;
+        return AuthErrorCode.GOOGLE_LOGIN_INTERNAL_SERVER_ERROR;
     }
 }
