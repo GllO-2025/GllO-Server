@@ -1,6 +1,5 @@
 package backend.glloserver.auth.service;
 
-
 import backend.glloserver.member.domain.AuthProvider;
 
 public interface AuthClient {

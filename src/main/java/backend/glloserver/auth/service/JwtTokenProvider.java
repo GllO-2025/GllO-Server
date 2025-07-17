@@ -6,8 +6,10 @@ import backend.glloserver.global.exception.CustomException;
 import backend.glloserver.member.exception.MemberErrorCode;
 import backend.glloserver.member.repository.MemberRepository;
 import backend.glloserver.member.repository.entity.MemberEntity;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +19,14 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
+
 import java.time.Clock;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+
 import java.util.Map;
+
 
 @Component
 @Slf4j
@@ -128,6 +133,5 @@ public class JwtTokenProvider {
     public String decodeHeader(String token) {
         return new String(Base64.getDecoder().decode(token), StandardCharsets.UTF_8);
     }
-
 
 }

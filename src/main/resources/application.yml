@@ -43,3 +43,4 @@ auth:
 apple:
   client-id: com.gllo.app.login
   issuer: https://appleid.apple.com
+

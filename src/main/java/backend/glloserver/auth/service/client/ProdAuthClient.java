@@ -1,15 +1,15 @@
 package backend.glloserver.auth.service.client;
 
-
 import backend.glloserver.auth.exception.GoogleLoginExceptionHandler;
 import backend.glloserver.auth.service.ApplePublicKeyProvider;
 import backend.glloserver.auth.service.dto.LoginResponseDto;
+import backend.glloserver.auth.exception.GoogleLoginExceptionHandler;
+import backend.glloserver.auth.service.dto.GoogleLoginResponseDto;
 import backend.glloserver.auth.service.AuthClient;
 import backend.glloserver.member.domain.AuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestClient;
-
 
 @RequiredArgsConstructor
 public class ProdAuthClient implements AuthClient {
@@ -44,7 +44,6 @@ public class ProdAuthClient implements AuthClient {
         String sub=applePublicKeyProvider.getSubFromIdToken(idToken);
         return AuthProvider.APPLE.buildLoginId(sub); // Apple의 'sub'은 고유 ID
     }
-
 
     private String createAuthorization(String accessToken) {
         return BEARER_HEADER_FORMAT.formatted(accessToken);
