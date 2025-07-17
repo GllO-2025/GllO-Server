@@ -9,8 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.boot.web.client.ClientHttpRequestFactorySettings;
-import org.springframework.http.client.ClientHttpRequestFactory;
+
 import org.springframework.web.client.RestClient;
 
 @Configuration
@@ -30,7 +29,8 @@ public class AuthClientConfig {
         return new DevAuthClient(createRestClient(),applePublicKeyProvider);
     }
 
-    private RestClient createRestClient() {
+    @Bean
+    public RestClient createRestClient() {
         return RestClient.builder()
                 .build();
     }
