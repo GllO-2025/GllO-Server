@@ -34,9 +34,7 @@ public class ApplePublicKeyProvider {
 
     public void verifyIdentifyToken(String idToken) {
         try {
-            Map<String, String> headers = jwtProvider.parseHeaders(idToken);
-            PublicKey publicKey = applePublicKeyGenerator.generatePublicKey(headers, getAppleAuthPublicKey());
-            Claims claims = jwtProvider.parseRsaToken(idToken, publicKey);
+            Claims claims = parseClaims(idToken);
             if (!appleIssuer.equals(claims.getIssuer())) {
                 throw new CustomException(AuthErrorCode.INVALID_IDTOKEN_ISS);
             }
@@ -48,7 +46,6 @@ public class ApplePublicKeyProvider {
             throw new CustomException(AuthErrorCode.INVALID_IDTOKEN_SIGNATURE);
         }
     }
-
 
     public Claims parseClaims(String idToken) throws JsonProcessingException, NoSuchAlgorithmException, InvalidKeySpecException {
         Map<String, String> headers = jwtProvider.parseHeaders(idToken);
@@ -65,10 +62,10 @@ public class ApplePublicKeyProvider {
     }
 
     public String getSubFromIdToken(String idToken) {
-        try{
+        try {
             Claims claims = parseClaims(idToken);
             return claims.getSubject();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new CustomException(AuthErrorCode.INVALID_IDTOKEN_SIGNATURE);
         }
     }
