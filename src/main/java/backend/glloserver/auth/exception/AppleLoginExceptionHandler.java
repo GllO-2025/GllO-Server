@@ -1,6 +1,5 @@
 package backend.glloserver.auth.exception;
 
-import backend.glloserver.auth.service.dto.GoogleLoginFailResponseDto;
 import backend.glloserver.auth.service.dto.LoginFailResponseDto;
 import backend.glloserver.global.exception.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +10,7 @@ import org.springframework.web.client.ResponseErrorHandler;
 import java.io.IOException;
 
 @Slf4j
-public class GoogleLoginExceptionHandler implements ResponseErrorHandler {
+public class AppleLoginExceptionHandler implements ResponseErrorHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -22,13 +21,13 @@ public class GoogleLoginExceptionHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
-        throw new CustomException(getGoogleLoginErrorCode(response));
+        throw new CustomException(getAppleLoginErrorCode(response));
     }
 
-    private AuthErrorCode getGoogleLoginErrorCode(final ClientHttpResponse response) throws IOException {
-        LoginFailResponseDto googleLoginFailResponse = objectMapper.readValue(
+    private AuthErrorCode getAppleLoginErrorCode(final ClientHttpResponse response) throws IOException {
+        LoginFailResponseDto LoginFailResponse = objectMapper.readValue(
                 response.getBody(), LoginFailResponseDto.class);
-        log.error(googleLoginFailResponse.toString());
-        return AuthErrorCode.GOOGLE_LOGIN_INTERNAL_SERVER_ERROR;
+        log.error(LoginFailResponse.toString());
+        return AuthErrorCode.APPLE_LOGIN_INTERNAL_SERVER_ERROR;
     }
 }

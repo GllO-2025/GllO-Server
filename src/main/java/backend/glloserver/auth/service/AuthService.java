@@ -1,5 +1,7 @@
 package backend.glloserver.auth.service;
 
+import backend.glloserver.auth.service.dto.*;
+import backend.glloserver.auth.service.dto.ios.AppleLoginRequest;
 import backend.glloserver.auth.service.dto.AuthInfoDto;
 import backend.glloserver.auth.service.dto.AuthMemberDto;
 import backend.glloserver.auth.service.dto.AuthTokenDto;
@@ -24,14 +26,25 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ApplePublicKeyProvider applePublicKeyProvider;
 
     //    @WriterDatabase
     @Transactional
     public AuthInfoDto googleLogin(GoogleLoginRequest request) {
-        String loginId = authClient.getUserInfo(request.accessToken());
-        log.info("loginId: {}", loginId);
         AuthProvider provider = AuthProvider.GOOGLE;
+        String loginId = authClient.getUserInfo(provider,request.accessToken());
+        log.info("loginId: {}", loginId);
         MemberEntity member = memberRepository.findByLoginId(loginId)
+                .orElseGet(() -> signup(provider, loginId));
+        return login(member);
+    }
+
+    @Transactional
+    public AuthInfoDto appleLogin(AppleLoginRequest request) {
+        AuthProvider provider = AuthProvider.APPLE;
+        applePublicKeyProvider.verifyIdentifyToken(request.tokenId());
+        String loginId= authClient.getUserInfo(provider,request.tokenId());
+        MemberEntity member=memberRepository.findByLoginId(loginId)
                 .orElseGet(() -> signup(provider, loginId));
         return login(member);
     }

@@ -40,3 +40,7 @@ auth:
   connect-timeout-length: 3s
   read-timeout-length: 3s
 
+apple:
+  client-id: com.gllo.app.login
+  issuer: https://appleid.apple.com
+
