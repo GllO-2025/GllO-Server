@@ -1,4 +1,7 @@
 package backend.glloserver.auth.service.dto;
 
-public record GoogleLoginFailResponseDto(String msg, Long code) {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record LoginFailResponseDto(String msg, Long code) {
 }
