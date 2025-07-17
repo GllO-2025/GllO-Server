@@ -6,6 +6,8 @@ import backend.glloserver.global.exception.CustomException;
 import backend.glloserver.member.exception.MemberErrorCode;
 import backend.glloserver.member.repository.MemberRepository;
 import backend.glloserver.member.repository.entity.MemberEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +15,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.security.PublicKey;
 import java.time.Clock;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -100,4 +105,29 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    //Apple id_token 검증
+    public Claims parseRsaToken(String token, PublicKey publicKey){
+        try{
+            return Jwts.parser()
+                    .setSigningKey(publicKey)
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch(ExpiredJwtException e){
+            throw new CustomException(AuthErrorCode.EXPIRED_ACCESS_TOKEN);
+        }catch(JwtException | IllegalArgumentException e) {
+            throw new CustomException(AuthErrorCode.INVALID_TOKEN);
+        }
+    }
+
+    public Map<String,String> parseHeaders(String token) throws JsonProcessingException {
+        String header=token.split("\\.")[0];
+        return new ObjectMapper().readValue(decodeHeader(header),Map.class);
+    }
+
+    public String decodeHeader(String token) {
+        return new String(Base64.getDecoder().decode(token), StandardCharsets.UTF_8);
+    }
+
+
 }
