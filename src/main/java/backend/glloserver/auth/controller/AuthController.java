@@ -43,8 +43,8 @@ public class AuthController {
         String code=params.get("code"); //authorization_code
         String idToken=params.get("id_token"); //id_token
 
-        System.out.println("code: "+code);
-        System.out.println("idToken: "+idToken);
+        log.debug("code: "+code);
+        log.debug("idToken: "+idToken);
 
         return ResponseEntity.ok("Apple callback received");
     }
