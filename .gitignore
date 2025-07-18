@@ -50,3 +50,6 @@ openapi3.yaml
 
 ### QueryDSL ###
 /src/main/generated
+
+### env ###
+.env
