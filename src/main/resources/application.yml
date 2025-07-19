@@ -34,8 +34,6 @@ security:
       access-token-expired: 30m
       refresh-token-expired: 14d
 
-
-
 auth:
   connect-timeout-length: 3s
   read-timeout-length: 3s
@@ -44,3 +42,14 @@ apple:
   client-id: com.gllo.app.login
   issuer: https://appleid.apple.com
 
+cloud:
+  aws:
+    s3:
+      bucket: ${STORAGE_BUCKET_NAME}
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      access-key: ${STORAGE_ACCESS_KEY}
+      secret-key: ${STORAGE_SECRET_KEY}
