@@ -22,7 +22,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/login/google")
+    @PostMapping("/api/auth/login/google")
     public ResponseEntity<LoginResponse> googleLogin(@RequestBody GoogleLoginRequest request){
         log.info("Google login request: {}", request);
         AuthInfoDto authInfo = authService.googleLogin(request);
@@ -30,7 +30,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/auth/login/apple")
+    @PostMapping("/api/auth/login/apple")
     public ResponseEntity<LoginResponse> appleLogin(@RequestBody AppleLoginRequest request){
         AuthInfoDto authInfo = authService.appleLogin(request);
         LoginResponse response = new LoginResponse(authInfo.authMember());
