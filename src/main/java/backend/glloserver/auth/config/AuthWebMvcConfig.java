@@ -24,15 +24,15 @@ public class AuthWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthorizationInterceptor(jwtTokenProvider, jwtHeaderExtractor))
-                .addPathPatterns("/")
+                .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/auth/",
-                        "/swagger-ui/",
+                        "/auth/**",
+                        "/swagger-ui/**",
                         "/swagger-ui.html",
-                        "/v3/api-docs/swagger-config",
+                        "/v3/api-docs/**",
                         "/static/swagger-ui/openapi3.yaml",
                         "/health-check",
-                        "/read-only/",
+                        "/read-only/**",
                         "/favicon.ico"
                 );
     }
