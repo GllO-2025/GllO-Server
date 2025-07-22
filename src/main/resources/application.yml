@@ -53,3 +53,10 @@ cloud:
     credentials:
       access-key: ${STORAGE_ACCESS_KEY}
       secret-key: ${STORAGE_SECRET_KEY}
+
+---
+spring:
+  config:
+    import: classpath:config/application-prod.yml
+    activate:
+      on-profile: prod
